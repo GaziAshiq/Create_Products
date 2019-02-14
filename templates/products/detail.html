@@ -1,0 +1,47 @@
+{% extends 'products/base.html' %}
+{% load staticfiles %}
+
+{% block head %}
+    <title>{{ product.title }}</title>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row pt-4">
+            <div class="col-2">
+                <img src="{{ product.icon.url }}" class="img-fluid" alt="ops!"/>
+            </div>
+            <div class="col-10">
+                <a class="" href="{{ product.url }}"><h2>{{ product.title }}</h2></a>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-8">
+                <img src="{{ product.image.url }}" class="img-fluid" alt="ops!"/>
+            </div>
+            <div class="col-4">
+                <a href="javascript:{document.getElementById('likes').submit()}">
+                    <button class="btn btn-lg shadow-lg btn-outline-primary">Like {{ product.total_votes }}</button>
+                </a>
+            </div>
+            <br>
+            <div class="col-4 pt-2">
+                <h4>owner :> {{ product.owner.username }}</h4>
+            </div>
+            <div class="col-4 pt-2">
+                <h5 class="text-right">{{ product.date_pretty }}</h5>
+            </div>
+            <br><br><br>
+            <div class="col-8">
+                <h6>{{ product.description }}</h6>
+            </div>
+        </div>
+        <br><br><br>
+    </div>
+
+    <form id="likes" method="post" action="{% url 'products:likes' product.slug product.id %}">
+        {% csrf_token %}
+        <input type="hidden">
+    </form>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'products/base.html' %}
+{% load staticfiles %}
+{% block head %}
+    <title>Create Product</title>
+    <link href="{% static 'css/sign.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    <div class="container jumbotron">
+        {% if error %}
+            {{ error }}
+            <br>
+            <br>
+        {% endif %}
+
+        <form class="form-signin" method="POST" action="{% url 'products:create' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h1 class="h3 mb-3 font-weight-normal">Create New Products</h1>
+            <br>
+            <label for="inputUserName" class="sr-only">Product Title:</label>
+            <input type="text" name="title" id="inputUserName" class="form-control" placeholder="Title:" required
+                   autofocus>
+            <label for="inputUserName" class="sr-only">Product Description:</label>
+            <textarea type="text" name="description" id="inputUserName" class="form-control" placeholder="Description:"
+                      required
+                      autofocus></textarea>
+            <label for="inputUserName" class="sr-only">Product URL:</label>
+            <input type="text" name="url" id="inputUserName" class="form-control" placeholder="URL:" required
+                   autofocus>
+            <label for="inputUserName" class="sr-only">Product ICON:</label>
+            <input type="file" name="icon" id="inputUserName" class="form-control" placeholder="ICON:" required
+                   autofocus>
+            <label for="inputUserName" class="sr-only">Product Image:</label>
+            <input type="file" name="image" id="inputUserName" class="form-control" placeholder="Image:" required
+                   autofocus>
+            <br>
+            <button class="shadow btn btn-lg btn-outline-success btn-block" type="submit">Create Product</button>
+        </form>
+    </div>
+{% endblock %}

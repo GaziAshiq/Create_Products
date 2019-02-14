@@ -1,1 +1,35 @@
-Sweet Home!
+{% extends 'products/base.html' %}
+{% load staticfiles %}
+
+{% block head %}
+    <title>Home</title>
+{% endblock %}
+
+{% block body %}
+    {% for foo in product %}
+        <div class="container">
+            <div class="row pt-5">
+                <div class="col-3" onclick="window.location='{% url 'products:detail' foo.slug foo.id %}';"
+                     style="cursor: pointer">
+                    <img src="{{ foo.icon.url }}" alt="icon!" class="img-fluid">
+                </div>
+                <div class="col-6">
+                    <h2 onclick="window.location='{% url 'products:detail' foo.slug foo.id %}';"
+                        style="cursor: pointer">{{ foo.title }}</h2>
+                    <h6>{{ foo.body }}</h6>
+                </div>
+                <div class="col-3 text-right">
+                    <a href="javascript:{document.getElementById('likes{{ foo.id }}').submit()}">
+                        <button class="btn btn-lg shadow-lg btn-outline-primary">Like {{ foo.total_votes }}</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <form id="likes{{ foo.id }}" method="post" action="{% url 'products:likes' foo.slug foo.id %}">
+            {% csrf_token %}
+            <input type="hidden">
+        </form>
+    {% endfor %}
+
+{% endblock %}
