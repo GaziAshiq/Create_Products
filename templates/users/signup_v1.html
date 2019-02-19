@@ -1,0 +1,16 @@
+{% extends 'products/base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+    <div class="container text-center">
+        <form class="" method="post">
+            {% csrf_token %}
+            <h1 class="h3 mb-3 font-weight-normal">Please Sign Up Here</h1><br>
+            {{ form.as_p }}
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
+        </form>
+    </div>
+{% endblock %}
