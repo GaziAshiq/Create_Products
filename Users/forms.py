@@ -12,12 +12,17 @@ class CreateProduct(forms.Form):
 
 
 class UserSignup(forms.Form):
-    username = forms.CharField(label='User Name', min_length=4, max_length=12, required=True, widget=forms.TextInput)
-    email = forms.EmailField(label='Email', required=True, widget=forms.EmailInput)
-    password = forms.CharField(label='Password', min_length=6, required=True, widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Confirm password', min_length=6, required=True, widget=forms.PasswordInput)
+    username = forms.CharField(label='User Name', min_length=4, max_length=12, required=True,
+                               widget=forms.TextInput(
+                                   attrs={'placeholder': 'User Name:', 'class': 'form-control', 'id': 'inputUserName'}))
+    email = forms.EmailField(label='Email', required=True, widget=forms.EmailInput(
+        attrs={'placeholder': 'Email:', 'class': 'form-control', 'id': 'inputEmail'}))
+    password = forms.CharField(label='Password', min_length=6, required=True, widget=forms.PasswordInput(
+        attrs={'placeholder': 'Password', 'class': 'form-control'}))
+    password2 = forms.CharField(label='Confirm password', min_length=6, required=True, widget=forms.PasswordInput(
+        attrs={'placeholder': 'Confirm Password', 'class': 'form-control'}))
 
-    def clean(self):
+    def clean_password2(self):
         us = self.cleaned_data
         pass1 = self.cleaned_data.get('password')
         pass2 = self.cleaned_data.get('password2')
@@ -40,3 +45,7 @@ class UserSignup(forms.Form):
             raise forms.ValidationError('This Email Already Used by different user')
         else:
             return em
+
+
+class UserLogin(forms.Form):
+    username = forms.CharField(required=True, label='User Name or Email')
